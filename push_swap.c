@@ -6,7 +6,7 @@
 /*   By: flmuller <flmuller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:48:23 by flmuller          #+#    #+#             */
-/*   Updated: 2023/11/30 13:27:42 by flmuller         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:02:06 by flmuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,20 @@ int	ft_atoi(const char *nptr)
 	return (res * sign);
 }
 
-t_pile	*init_node(int value, t_pile *previous, t_pile *next)
+t_pile	*init_node(t_pile *node, int value, t_pile *previous, t_pile *next)
 {
-	t_pile	*node;
-
-	node = malloc(sizeof(t_pile));
-	if (!node)
-		return(NULL);
 	node->value = value;
 	if (next)
 		node->next = next;
+	else
+		node->next = malloc(sizeof(t_pile));
 	if (previous)
+	{
 		node->previous = previous;
-	return (node);
+		previous = node;
+	}
+	return (node->next);
 }
-
 
 /*
 	Function: init_pile
@@ -112,9 +111,9 @@ t_pile	*init_node(int value, t_pile *previous, t_pile *next)
 	return pointer on the first element of the list.
 	return Null in case of Error.
  */
-t_pile	**init_pile(char **numbers, unsigned int nbelem)
+t_pile	**init_pile(int *numbers, unsigned int nbelem)
 {
-	int	i;
+	int		i;
 	t_pile	*node;
 	t_pile	*previous;
 	t_pile	*next;
@@ -125,27 +124,18 @@ t_pile	**init_pile(char **numbers, unsigned int nbelem)
 	if (!node)
 		return(NULL);
 	first = node;
-	while (!node->previous)
+	while (!node->next)
 	{
-		if (!node->value)
-		{
-			node->value = ft_atoi(numbers[i]);
-			i++;
-		}
-		if (i < nbelem)
-		{
-		next = malloc(sizeof(t_pile));
-		if (!next)
-			return(NULL);
-		}
-		else
+		next = NULL;
+		if (i >= nbelem)
 			next = first;
-		node->next = next;
-		if (previous)
-			node->previous = previous;
-		previous = node;
-		node = next;
+		node = init_node(node, numbers[i++], previous, next);
 	}
+}
+
+int	*control_pile(int argc, char **argv)
+{
+
 }
 
 int	main(int argc, char **argv)
@@ -155,7 +145,7 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		
+			
 	}
 	else
 	{
