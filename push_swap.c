@@ -6,7 +6,7 @@
 /*   By: flmuller <flmuller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:48:23 by flmuller          #+#    #+#             */
-/*   Updated: 2024/01/09 13:02:06 by flmuller         ###   ########.fr       */
+/*   Updated: 2024/01/16 09:21:09 by flmuller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,15 @@ t_pile	**init_pile(int *numbers, unsigned int nbelem)
 	}
 }
 
-int	*control_pile(int argc, char **argv)
+int	*control_pile(int nbelem, char **elems)
+{
+	if (nbelem < 1)
+	{
+		ft_split();
+	}
+}
+
+void checkparams()
 {
 
 }
@@ -145,7 +153,7 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-			
+				
 	}
 	else
 	{
