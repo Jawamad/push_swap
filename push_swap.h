@@ -6,7 +6,7 @@
 /*   By: florianmuller <florianmuller@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:08:15 by flmuller          #+#    #+#             */
-/*   Updated: 2024/01/18 14:05:19 by florianmull      ###   ########.fr       */
+/*   Updated: 2024/01/29 14:05:09 by florianmull      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	push(t_pile **ntpush, t_pile **pushpile);
 void	rotate(t_pile **node, int nbrot);
 int		ft_atoi_ps(const char *nptr);
 int		*control_pile(int nbelem, char **elems);
-t_pile	*init_node(t_pile *node, int value, t_pile *previous, t_pile *next);
+t_pile	*init_node(t_pile *node, int value, t_pile *next);
 t_pile	**init_pile(int *numbers, unsigned int nbelem);
 int		*charlist_to_intlist(char **nblist);
 void 	remove_list(char **list);

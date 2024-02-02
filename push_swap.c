@@ -6,31 +6,44 @@
 /*   By: florianmuller <florianmuller@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:48:23 by flmuller          #+#    #+#             */
-/*   Updated: 2024/01/18 14:10:41 by florianmull      ###   ########.fr       */
+/*   Updated: 2024/02/02 14:45:00 by florianmull      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_pile	*init_node(t_pile *node, int value, t_pile *previous, t_pile *next)
+/*
+	Function: init_node
+	-------------------
+	Init a node of t_pile struct with provided value.
+	parameter next is optional.
+	If next parameter is not provided init a new node 
+	that will be considered to be the "next" of the current node.
+	Return the  adress of the next node.
+	Return Null in case of Error.
+ */
+t_pile	*init_node(t_pile *node, int value, t_pile *next)
 {
+	t_pile	*temp;
+
 	node->value = value;
 	if (next)
 		node->next = next;
 	else
-		node->next = malloc(sizeof(t_pile));
-	if (previous)
 	{
-		node->previous = previous;
-		previous = node;
+		node->next = malloc(sizeof(t_pile));
+		if (node->next == NULL)
+			return (NULL);
 	}
+	temp = node->next;
+	temp->previous = node;
 	return (node->next);
 }
 
 /*
 	Function: init_pile
 	-------------------
-	Init an list of t_pile struct with provided numbers.
+	Init a list of t_pile struct with provided numbers.
 	return pointer on the first element of the list.
 	return Null in case of Error.
  */
@@ -47,32 +60,36 @@ t_pile	**init_pile(int *numbers, unsigned int nbelem)
 	if (!node)
 		return(NULL);
 	first = node;
-	while (!node->next)
+	while (node->next != first)
 	{
 		next = NULL;
 		if (i >= nbelem)
 			next = first;
-		node = init_node(node, numbers[i++], previous, next);
+		node = init_node(node, numbers[i++], next);
 	}
+	first->previous = node;
+	node = node->next;
+	return (&node);
 }
 
+/*
+	Function: control_pile 
+	-------------------
+	check the validity of parameters pass to the function
+	return a list of numbers.
+	return Null in case of Error.
+ */
 int	*control_pile(int nbelem, char **elems)
 {
 	char	**nblist;
 	int		*intlist;
-	int		i;
-	int		j;
 
 	nblist = check_pile(nbelem, elems);
 	if (!nblist)
 		return (NULL);
 	intlist = charlist_to_intlist(nblist);
 	if(!check_dupli(intlist, nbelem))
-	{
-		i = 0;
-		while (i < nbelem)
-			free(intlist[i++]);
-	}
+		free(intlist);
 	return (intlist);
 }
 
